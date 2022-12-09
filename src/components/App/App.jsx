@@ -2,7 +2,8 @@ import { HashRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 import MovieList from '../MovieList/MovieList';
 import {useSelector} from 'react-redux'
-import MovieDetails from '../MovieDetails/MovieDetails'
+import MovieDetails from '../MovieDetails/MovieDetails';
+import MovieForm from '../MovieForm/MovieForm'
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
                         </Route>
                     )
                 })}
+                <Route exact path = '/add'><MovieForm/></Route>
                 {/* Details page */}
 
                 {/* Add Movie page */}
