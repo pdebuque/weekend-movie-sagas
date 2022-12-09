@@ -1,5 +1,6 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import {useHistory} from 'react-router-dom';
 import { Paper, Collapse, Chip, Box } from '@mui/material';
 import './MovieDetails.css'
 
@@ -21,6 +22,7 @@ export default function MovieDetails({ movie }) {
     */
 
     const dispatch = useDispatch();
+    const history=useHistory();
     const [open, setOpen] = useState(false)
 
     const genres = useSelector(store => store.genres)
@@ -41,7 +43,7 @@ export default function MovieDetails({ movie }) {
         <Paper
             className="movie-detail-container"
             elevation={2}
-            sx={{ mt: 1, p: 2, marginX: 'auto', maxWidth: 500 }}
+            sx={{ mt: 1, p: 2, marginX: 'auto', maxWidth: 400 }}
         >
             <h2 className="movie-title">{movie.title}</h2>
             {genres.map(genre => {
@@ -58,7 +60,8 @@ export default function MovieDetails({ movie }) {
             >
                 <img src={movie.poster} alt={`${movie.title} poster`} />
             </Box>
-            <button onClick={() => setOpen(!open)}>see more</button>
+            <button onClick={()=>history.push('/')}>home</button>
+            <button onClick={() => setOpen(!open)}>description</button>
 
             <Collapse in={open} >
                 <Box
