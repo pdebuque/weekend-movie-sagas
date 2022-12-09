@@ -14,6 +14,8 @@ import axios from 'axios';
 // Create the rootSaga generator function
 function* rootSaga() {
     yield takeEvery('FETCH_MOVIES', fetchAllMovies);
+    yield takeEvery('GET_GENRES', getGenres);
+    yield takeEvery('ADD_MOVIE', addMovie)
 }
 
 function* fetchAllMovies() {
@@ -26,7 +28,31 @@ function* fetchAllMovies() {
     } catch {
         console.log('get all error');
     }
-        
+
+}
+
+function* getGenres(action) {
+    try {
+        // console.log('getting genres')
+        const genres = yield axios.get(`/api/genre/${action.payload}`);
+        // console.log('got genres: ', genres.data)
+        yield put({ type: 'SET_GENRES', payload: genres.data })
+    } catch (err) {
+        console.log('get failed')
+    }
+}
+
+function* addMovie(action) {
+    try {
+        console.log('adding movie: ', action.payload)
+        // need to add movie to the movie table and the genre to the genre database
+        yield axios.post('/api/movie', action.payload);
+
+        // to add genre, need the movie id. genre id is in the action payload
+
+    } catch (err) {
+        console.log('could not add', err)
+    }
 }
 
 // Create sagaMiddleware
@@ -46,6 +72,7 @@ const movies = (state = [], action) => {
 const genres = (state = [], action) => {
     switch (action.type) {
         case 'SET_GENRES':
+            // console.log('setting the genres')
             return action.payload;
         default:
             return state;
@@ -68,7 +95,7 @@ sagaMiddleware.run(rootSaga);
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={storeInstance}>
-        <App />
+            <App />
         </Provider>
     </React.StrictMode>,
     document.getElementById('root')
