@@ -95,19 +95,18 @@ The Add Movie page should have the buttons:
 
 
 ### 2. Refresh on Details Page
-Allow the app to maintain on refresh our details page.
-Research [React Router URL PARAMS](https://reactrouter.com/web/example/url-params) 
+Allow the app to maintain our details page on refresh.
+
+Research [React Router URL PARAMS](https://reactrouter.com/web/example/url-params)
 
 ### 3. Edit Page (Stretch)
 Add to the detail page an edit button that brings the user to the edit page.
 
 This new page should show:
-
 - an input field (for changing the movie title), for the selected movie.
 - a textarea (for changing the movie description)
 
 The edit page should have the buttons:
-
 - `Cancel` button, which should bring the user to the Details Page
 - `Save` button, which should update the title and description in the database and bring the user to the Details Page
 

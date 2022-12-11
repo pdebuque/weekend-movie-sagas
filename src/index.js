@@ -15,7 +15,7 @@ import axios from 'axios';
 function* rootSaga() {
     yield takeEvery('FETCH_MOVIES', fetchAllMovies);
     yield takeEvery('GET_GENRES', getGenres);
-    yield takeEvery('ADD_MOVIE', addMovie)
+    yield takeEvery('ADD_MOVIE', addMovie);
 }
 
 function* fetchAllMovies() {
@@ -49,11 +49,11 @@ function* addMovie(action) {
         yield axios.post('/api/movie', action.payload);
 
         // to add genre, need the movie id. genre id is in the action payload
-
     } catch (err) {
         console.log('could not add', err)
     }
 }
+
 
 // Create sagaMiddleware
 const sagaMiddleware = createSagaMiddleware();

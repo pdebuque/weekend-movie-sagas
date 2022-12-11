@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom'
 import './MovieList.css'
-import { Modal, Button, Box, Typography } from '@mui/material';
-import MovieForm from '../MovieForm/MovieForm'
+import { Modal, Button, Box, Typography, Grid } from '@mui/material';
+import MovieForm from '../MovieForm/MovieForm';
+import MovieListItem from '../MovieListItem/MovieListItem';
 
 function MovieList() {
 
@@ -18,29 +19,28 @@ function MovieList() {
 
     return (
         <main>
-            <h1>MovieList</h1>
-            <Button
+            <Typography
+                sx={{marginY:1}}
+                variant="h3"
+            >My movies <Button
+                sx={{ p: 0, minWidth: 24 }}
+                size='small'
                 variant='outlined'
                 color='inherit'
                 onClick={() => setOpen(true)}
-            >add movie</Button>
+            >+</Button></Typography>
+
             <section className="movies">
                 {movies.map(movie => {
                     return (
-                        <div
-                            key={movie.id}
-                            onClick={() => history.push(`/details/${movie.title}`)}
-                        >
-                            <h3>{movie.title}</h3>
-                            <img src={movie.poster} alt={movie.title} />
-                        </div>
+                        <MovieListItem key = {movie.id} movie={movie}/>
                     );
                 })}
             </section>
             <Modal open={modalOpen}>
-                    <MovieForm
-                        setOpen={setOpen}
-                    />
+                <MovieForm
+                    setOpen={setOpen}
+                />
             </Modal>
         </main>
 
