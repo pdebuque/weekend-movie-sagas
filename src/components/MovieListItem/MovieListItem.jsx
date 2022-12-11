@@ -17,7 +17,7 @@ export default function MovieListItem({ movie }) {
         <Box
             sx={{ marginY: 1, marginX: .5 }}
             key={movie.id}
-            onClick={() => history.push(`/details/${movie.title}`)}
+            onClick={() => history.push(`/details/${movie.id}`)}
             onMouseEnter={() => setText(true)}
             onMouseLeave={() => setText(false)}
         >
