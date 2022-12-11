@@ -1,8 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { Paper, Collapse, Chip, Box } from '@mui/material';
-import './MovieDetails.css'
+import { Paper, Collapse, Chip, Box, Modal } from '@mui/material';
+import './MovieDetails.css';
+import EditModal from '../EditModal/EditModal';
+import { modalStyle } from './modalStyle'
 
 export default function MovieDetails() {
     const dispatch = useDispatch();
@@ -11,13 +13,14 @@ export default function MovieDetails() {
     const { id } = useParams();
     // used for the collapsed description
     const [open, setOpen] = useState(false);
+    const [editOpen, setEditOpen] = useState(false)
 
     useEffect(() => {
         dispatch({ type: 'FETCH_MOVIES' })
     }, []);
 
     const movieList = useSelector(store => store.movies);
-    console.log('movies: ', movieList)
+    console.log('movies: ', movieList);
 
     // const genres = useSelector(store => store.genres)
     // const getGenres = () => {
@@ -35,21 +38,21 @@ export default function MovieDetails() {
                 .map(movie => {
                     return (
                         <Paper
-                            key = {movie.id}
+                            key={movie.id}
                             className="movie-detail-container"
                             elevation={2}
                             sx={{ mt: 1, p: 2, marginX: 'auto', maxWidth: 400 }}
                         >
                             <h2 className="movie-title">{movie.title}</h2>
-                            {/* {thisMovie.genres.map(genre => {
-                return (
-                    <Chip
-                        sx={{ marginY: 1, marginX: .5 }}
-                        size='small'
-                        key={genre.id}
-                        label={genre.name} />
-                )
-            })} */}
+                            {/* {movie.genres.map(genre => {
+                                return (
+                                    <Chip
+                                        sx={{ marginY: 1, marginX: .5 }}
+                                        size='small'
+                                        key={genre.id}
+                                        label={genre.name} />
+                                )
+                            })} */}
                             <Box
                                 className="poster-container"
                             >
@@ -57,6 +60,7 @@ export default function MovieDetails() {
                             </Box>
                             <button onClick={() => history.push('/')}>home</button>
                             <button onClick={() => setOpen(!open)}>description</button>
+                            <button onClick={() => setEditOpen(true)}>edit</button>
 
                             <Collapse in={open} >
                                 <Box
@@ -65,12 +69,24 @@ export default function MovieDetails() {
                                     {movie.description}
                                 </Box>
                             </Collapse>
+                            <Modal
+                                open={editOpen}
+                            >
+                                <Box sx={modalStyle}>
+
+                                    <EditModal
+                                        editOpen={editOpen}
+                                        setEditOpen={setEditOpen}
+                                        movie={movie}
+                                    />
+                                </Box>
+                            </Modal>
                         </Paper>
                     )
                 })
 
             }
-        </div>
+        </div >
 
     )
 }
