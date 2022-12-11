@@ -16,6 +16,7 @@ function* rootSaga() {
     yield takeEvery('FETCH_MOVIES', fetchAllMovies);
     yield takeEvery('GET_GENRES', getGenres);
     yield takeEvery('ADD_MOVIE', addMovie);
+    yield takeEvery('EDIT_MOVIE', editMovie)
 }
 
 function* fetchAllMovies() {
@@ -54,6 +55,15 @@ function* addMovie(action) {
     }
 }
 
+function* editMovie(action) {
+    try{
+        console.log('received action:', action.payload)
+        yield axios.put(`/api/movie/${action.payload.id}`, action.payload)
+        console.log('successfully edited data')
+        yield put({type: 'FETCH_MOVIES'})
+
+    } catch(err){console.log('could not edit', err)}
+}
 
 // Create sagaMiddleware
 const sagaMiddleware = createSagaMiddleware();
