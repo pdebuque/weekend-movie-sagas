@@ -4,7 +4,11 @@ const pool = require('../modules/pool')
 
 router.get('/', (req, res) => {
 
-    const query = `SELECT * FROM movies ORDER BY "title" ASC`;
+    const query = `SELECT movies.id, movies.title, movies.poster, movies.description, array_agg(genres.name) AS genres FROM movies 
+    JOIN movies_genres ON movies_genres.movie_id=movies.id
+    JOIN genres ON genres.id = movies_genres.genre_id
+    GROUP BY movies.id
+    ORDER BY movies.title ASC;`;
     pool.query(query)
         .then(result => {
             res.send(result.rows);

@@ -44,15 +44,15 @@ export default function MovieDetails() {
                             sx={{ mt: 1, p: 2, marginX: 'auto', maxWidth: 400 }}
                         >
                             <h2 className="movie-title">{movie.title}</h2>
-                            {/* {movie.genres.map(genre => {
+                            {movie.genres.map((genre,i) => {
                                 return (
                                     <Chip
                                         sx={{ marginY: 1, marginX: .5 }}
                                         size='small'
-                                        key={genre.id}
-                                        label={genre.name} />
+                                        key={i}
+                                        label={genre} />
                                 )
-                            })} */}
+                            })}
                             <Box
                                 className="poster-container"
                             >
